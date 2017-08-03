@@ -81,5 +81,20 @@ $app->post('/matkul', function($request, $response, $args) use($app, $db){
     echo json_encode($responseJson);
 });
 
+$app->delete('/matkul/{id}', function($request, $response, $args) use($app, $db){
+    $matkul = $db->tbl_matkul()->where('id', $args);
+    if($matkul->fetch()){
+        $result = $matkul->delete();
+        echo json_encode(array(
+            "error" => false,
+            "message" => "Matkul berhasil dihapus"));
+    }
+    else{
+        echo json_encode(array(
+            "error" => true,
+            "message" => "Matkul ID tersebut tidak ada"));
+    }
+});
+
 //run App
 $app->run();
